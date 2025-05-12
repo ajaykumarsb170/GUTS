@@ -287,6 +287,7 @@ def get_readable_message():
             MirrorStatus.STATUS_SEEDING,
             MirrorStatus.STATUS_METADATA,
         ]:
+            msg += "<b>Powered by <a href='https://t.me/ASA_MIKATA1'>ASA MIKATA</a></b>\n\n"
             msg += BotTheme(
                 "BAR",
                 Bar=f"{get_progress_bar_string(download.progress())} {download.progress()}",
