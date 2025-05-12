@@ -177,6 +177,7 @@ class WZMLStyle:
 
     # def get_readable_message(): ---> bot_utilis.py
     ####--------OVERALL MSG HEADER----------
+    <a href='https://t.me/ASA_MIKATA1'>Asa Mikata</a>
     STATUS_NAME = "<b><i>{Name}</i></b>"
 
     #####---------PROGRESSIVE STATUS-------
