@@ -222,6 +222,7 @@ async def get_readable_message(sid, is_user, page_no=1, status="All", page_step=
             tstatus = await task.status()
         else:
             tstatus = task.status()
+        msg += "<b>Powered by <a href='https://t.me/ASA_MIKATA1'>ASA MIKATA</a></b>\n\n"
         msg += f"<b>{index + start_position}.</b> "
         msg += f"<b><i>{escape(f'{task.name()}')}</i></b>"
         if task.listener.subname:
