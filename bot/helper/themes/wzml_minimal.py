@@ -3,9 +3,9 @@ class WZMLStyle:
     # ----------------------
     # async def start(client, message) ---> __main__.py
     ST_BN1_NAME = "Repo"
-    ST_BN1_URL = "https://www.github.com/weebzone/WZML-X"
+    ST_BN1_URL = "https://github.com/ajaykumarsb170/GUTS"
     ST_BN2_NAME = "Updates"
-    ST_BN2_URL = "https://t.me/WZML_X"
+    ST_BN2_URL = "https://t.me/ASA_MIKATA1"
     ST_MSG = """<i>This bot can mirror all your links|files|torrents to Google Drive or any rclone cloud or to telegram or to ddl servers.</i>
 <b>Type {help_command} to get a list of available commands</b>"""
     ST_BOTPM = """<i>Now, This bot will send all your files and links here. Start Using ...</i>"""
@@ -44,7 +44,7 @@ class WZMLStyle:
     HELP_HEADER = "㊂ <b><i>Help Guide Menu!</i></b>\n\n<b>NOTE: <i>Click on any CMD to see more minor detalis.</i></b>"
 
     # async def stats(client, message):
-    BOT_STATS = """⌬ <b><i>BOT STATISTICS :</i></b>
+    BOT_STATS = """⌬ <b><i>Asa BOT STATISTICS :</i></b>
 ┖ <b>Bot Uptime :</b> {bot_uptime}
 
 ┎ <b><i>RAM ( MEMORY ) :</i></b>
@@ -62,7 +62,7 @@ class WZMLStyle:
 ┖ <b>U :</b> {disk_u} | <b>F :</b> {disk_f} | <b>T :</b> {disk_t}
     
     """
-    SYS_STATS = """⌬ <b><i>OS SYSTEM :</i></b>
+    SYS_STATS = """⌬ <b><i>Asa OS SYSTEM :</i></b>
 ┠ <b>OS Uptime :</b> {os_uptime}
 ┠ <b>OS Version :</b> {os_version}
 ┖ <b>OS Arch :</b> {os_arch}
@@ -82,7 +82,7 @@ class WZMLStyle:
 ┠ <b>Total Core(s) :</b> {total_core}
 ┖ <b>Usable CPU(s) :</b> {cpu_use}
     """
-    REPO_STATS = """⌬ <b><i>REPO STATISTICS :</i></b>
+    REPO_STATS = """⌬ <b><i>Asa REPO STATISTICS :</i></b>
 ┠ <b>Bot Updated :</b> {last_commit}
 ┠ <b>Current Version :</b> {bot_version}
 ┠ <b>Latest Version :</b> {lat_version}
@@ -90,7 +90,7 @@ class WZMLStyle:
 
 ⌬ <b>REMARKS :</b> <code>{remarks}</code>
     """
-    BOT_LIMITS = """⌬ <b><i>BOT LIMITATIONS :</i></b>
+    BOT_LIMITS = """⌬ <b><i>Asa BOT LIMITATIONS :</i></b>
 ┠ <b>Direct Limit :</b> {DL} GB
 ┠ <b>Torrent Limit :</b> {TL} GB
 ┠ <b>GDrive Limit :</b> {GL} GB
@@ -177,8 +177,7 @@ class WZMLStyle:
 
     # def get_readable_message(): ---> bot_utilis.py
     ####--------OVERALL MSG HEADER----------
-    <a href='https://t.me/ASA_MIKATA1'>Asa Mikata</a>
-    STATUS_NAME = "<b><i>{Name}</i></b>"
+    STATUS_NAME = "<a href='https://t.me/ASA_MIKATA1'>Asa Mikata</a> - <b><i>{Name}</i></b>"
 
     #####---------PROGRESSIVE STATUS-------
     BAR = "\n┃ {Bar}"
@@ -211,7 +210,7 @@ class WZMLStyle:
     CANCEL = "\n┖ {Cancel}\n\n"
 
     ####------FOOTER--------
-    FOOTER = "⌬ <b><i>Bot Stats</i></b>\n"
+    FOOTER = "⌬ <b><i>Asa Stats</i></b>\n"
     TASKS = "┠ <b>Tasks:</b> {Tasks}\n"
     BOT_TASKS = "┠ <b>Tasks:</b> {Tasks}/{Ttask} | <b>AVL:</b> {Free}\n"
     Cpu = "┠ <b>CPU:</b> {cpu}% | "
