@@ -66,7 +66,13 @@ DEFAULT_VALUES = {
     "SEARCH_LIMIT": 0,
     "UPSTREAM_BRANCH": "master",
     "DEFAULT_UPLOAD": "rc",
+    "BOT_MAX_TASKS": 0,
+    "QUEUE_ALL": 0,
+    "QUEUE_DOWNLOAD": 0,
+    "QUEUE_UPLOAD": 0,
+    "USER_MAX_TASKS": 0,
 }
+
 
 
 async def get_buttons(key=None, edit_type=None, edit_mode=False):
@@ -313,6 +319,26 @@ async def edit_variable(_, message, pre_message, key):
             index_urls[0] = value
         else:
             index_urls.insert(0, value)
+    elif key == "LINKS_LOG_ID":
+        if value.strip():
+            try:
+                value = int(value.strip())
+            except ValueError:
+                await send_message(
+                    message,
+                    "Invalid value! LINKS_LOG_ID must be a valid integer chat ID.",
+                )
+                return await update_buttons(pre_message, "var")
+    elif key == "MIRROR_LOG_ID":
+        if value.strip():
+            try:
+                value = int(value.strip())
+            except ValueError:
+                await send_message(
+                    message,
+                    "Invalid value! MIRROR_LOG_ID must be a valid integer chat ID.",
+                )
+                return await update_buttons(pre_message, "var")
     elif key == "AUTHORIZED_CHATS":
         aid = value.split()
         auth_chats.clear()
@@ -330,6 +356,8 @@ async def edit_variable(_, message, pre_message, key):
         for id_ in aid:
             sudo_users.append(int(id_.strip()))
     elif key == "LOGIN_PASS":
+        value = str(value)
+    elif key == "DEBRID_LINK_API":
         value = str(value)
     elif value.isdigit():
         value = int(value)

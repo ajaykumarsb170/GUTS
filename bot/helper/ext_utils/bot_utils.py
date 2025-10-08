@@ -5,7 +5,6 @@ from asyncio import (
     sleep,
 )
 from asyncio.subprocess import PIPE
-from base64 import urlsafe_b64decode, urlsafe_b64encode
 from concurrent.futures import ThreadPoolExecutor
 from functools import partial, wraps
 
@@ -155,7 +154,16 @@ def arg_parser(items, arg_base):
         "-med",
         "-ut",
         "-bt",
+        "-yt",
     }
+    if Config.DISABLE_BULK and "-b" in items:
+        arg_base["-b"] = False
+
+    if Config.DISABLE_MULTI and "-i" in items:
+        arg_base["-i"] = 0
+
+    if Config.DISABLE_SEED and "-d" in items:
+        arg_base["-d"] = False
 
     while i < total:
         part = items[i]
@@ -180,6 +188,7 @@ def arg_parser(items, arg_base):
                     "-med",
                     "-ut",
                     "-bt",
+                    "-yt",
                 ]
             ):
                 arg_base[part] = True
@@ -243,16 +252,6 @@ def update_user_ldata(id_, key, value):
     user_data[id_][key] = value
 
 
-def encode_slink(string):
-    return (urlsafe_b64encode(string.encode("ascii")).decode("ascii")).strip("=")
-
-
-def decode_slink(b64_str):
-    return urlsafe_b64decode(
-        (b64_str.strip("=") + "=" * (-len(b64_str.strip("=")) % 4)).encode("ascii")
-    ).decode("ascii")
-
-
 async def cmd_exec(cmd, shell=False):
     if shell:
         proc = await create_subprocess_shell(cmd, stdout=PIPE, stderr=PIPE)
@@ -297,3 +296,10 @@ def loop_thread(func):
         return future.result() if wait else future
 
     return wrapper
+
+
+def safe_int(value, default=0):
+    try:
+        return int(value)
+    except (ValueError, TypeError):
+        return default

@@ -1,7 +1,9 @@
+import re
 from contextlib import suppress
 from PIL import Image
 from hashlib import md5
 from aiofiles.os import remove, path as aiopath, makedirs
+import json
 from asyncio import (
     create_subprocess_exec,
     gather,
@@ -142,10 +144,49 @@ async def get_document_type(path):
         is_video = False
         for stream in fields:
             if stream.get("codec_type") == "video":
-                is_video = True
+                codec_name = stream.get("codec_name", "").lower()
+                if codec_name not in {"mjpeg", "png", "bmp"}:
+                    is_video = True
             elif stream.get("codec_type") == "audio":
                 is_audio = True
     return is_video, is_audio, is_image
+
+
+async def get_streams(file):
+    """
+    Gets media stream information using ffprobe.
+
+    Args:
+        file: Path to the media file.
+
+    Returns:
+        A list of stream objects (dictionaries) or None if an error occurs
+        or no streams are found.
+    """
+    cmd = [
+        "ffprobe",
+        "-hide_banner",
+        "-loglevel",
+        "error",
+        "-print_format",
+        "json",
+        "-show_streams",
+        file,
+    ]
+    process = await create_subprocess_exec(*cmd, stdout=PIPE, stderr=PIPE)
+    stdout, stderr = await process.communicate()
+
+    if process.returncode != 0:
+        LOGGER.error(f"Error getting stream info: {stderr.decode().strip()}")
+        return None
+
+    try:
+        return json.loads(stdout)["streams"]
+    except KeyError:
+        LOGGER.error(
+            f"No streams found in the ffprobe output: {stdout.decode().strip()}",
+        )
+        return None
 
 
 async def take_ss(video_file, ss_nb) -> bool:
@@ -276,8 +317,15 @@ async def get_video_thumbnail(video_file, duration):
 
 
 async def get_multiple_frames_thumbnail(video_file, layout, keep_screenshots):
+    layout = re.sub(r"(\d+)\D+(\d+)", r"\1x\2", layout)
     ss_nb = layout.split("x")
+    if len(ss_nb) != 2 or not ss_nb[0].isdigit() or not ss_nb[1].isdigit():
+        LOGGER.error(f"Invalid layout value: {layout}")
+        return None
     ss_nb = int(ss_nb[0]) * int(ss_nb[1])
+    if ss_nb == 0:
+        LOGGER.error(f"Invalid layout value: {layout}")
+        return None
     dirpath = await take_ss(video_file, ss_nb)
     if not dirpath:
         return None
@@ -395,6 +443,20 @@ class FFMpeg:
                             self._progress_raw = (
                                 self._processed_time * 100
                             ) / self._total_time
+                            if (
+                                hasattr(self._listener, "subsize")
+                                and self._listener.subsize
+                                and self._progress_raw > 0
+                            ):
+                                self._processed_bytes = int(
+                                    self._listener.subsize * (self._progress_raw / 100)
+                                )
+                            if (time() - self._start_time) > 0:
+                                self._speed_raw = self._processed_bytes / (
+                                    time() - self._start_time
+                                )
+                            else:
+                                self._speed_raw = 0
                             self._eta_raw = (
                                 self._total_time - self._processed_time
                             ) / self._time_rate
