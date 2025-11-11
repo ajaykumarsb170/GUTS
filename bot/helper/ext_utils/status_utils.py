@@ -225,7 +225,7 @@ async def get_readable_message(sid, is_user, page_no=1, status="All", page_step=
             tstatus = await task.status()
         else:
             tstatus = task.status()
-        msg += "<b><i>Powered by <a href='https://t.me/ASA_MIKATA1'>ASA MIKATA</a></i></b>\n\n"
+        msg += "<b><i><pre><blockqoute>Powered by <a href='https://t.me/ASA_MIKATA1'>ASA MIKAT0A</a></blockqoute></pre></i></b>\n\n"
         msg += f"<b>{index + start_position}.</b> "
         msg += f"<b><i>{escape(f'{task.name()}')}</i></b>"
         if task.listener.subname:
@@ -288,7 +288,7 @@ async def get_readable_message(sid, is_user, page_no=1, status="All", page_step=
     msg += "⌬ <b><u>Bot Stats</u></b>"
     buttons = ButtonMaker()
     if not is_user:
-        buttons.data_button("📜 Stats", f"status {sid} ov", position="header")
+        buttons.data_button("🔵 Stats", f"status {sid} ov", position="header")
     if len(tasks) > STATUS_LIMIT:
         msg += f"<b>Page:</b> {page_no}/{pages} | <b>Tasks:</b> {tasks_no} | <b>Step:</b> {page_step}\n"
         buttons.data_button("<<", f"status {sid} pre", position="header")
